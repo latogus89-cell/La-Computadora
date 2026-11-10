@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC APRENDE</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #e8edf5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    background: #f8fafc;
+    position: relative;
+    padding-bottom: 85px;
+    box-shadow: 0 0 20px #0002;
+}
+
+header {
+    background: #102c50;
+    color: white;
+    padding: 25px 20px;
+    border-radius: 0 0 25px 25px;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header p {
+    margin-top: 8px;
+    color: #cbdcf2;
+    font-size: 13px;
+}
+
+.contenido {
+    padding: 20px;
+}
+
+.bienvenida {
+    background: linear-gradient(135deg, #164e83, #2685c7);
+    color: white;
+    padding: 22px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+}
+
+.bienvenida h2 {
+    margin-bottom: 10px;
+}
+
+.bienvenida p {
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.titulo {
+    color: #102c50;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+.tarjeta {
+    background: white;
+    padding: 18px 10px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 3px 10px #00000012;
+    cursor: pointer;
+    border: 1px solid #e5eaf0;
+    transition: 0.2s;
+}
+
+.tarjeta:active {
+    transform: scale(0.96);
+}
+
+.icono {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.tarjeta h3 {
+    font-size: 15px;
+    color: #183c61;
+}
+
+.tarjeta p {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+}
+
+.seccion {
+    display: none;
+}
+
+.seccion.activa {
+    display: block;
+}
+
+.boton {
+    background: #1766a5;
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 12px;
+    width: 100%;
+    font-size: 15px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #104b7c;
+}
+
+.detalle {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px #0001;
+    text-align: center;
+}
+
+.detalle .icono {
+    font-size: 75px;
+}
+
+.detalle h2 {
+    color: #164e83;
+    margin-bottom: 12px;
+}
+
+.detalle p {
+    line-height: 1.6;
+    color: #475569;
+}
+
+.opcion {
+    background: white;
+    border: 1px solid #dce5ef;
+    padding: 13px;
+    margin-top: 10px;
+    border-radius: 10px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.opcion:hover {
+    background: #e8f3ff;
+}
+
+.resultado {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #e0f2fe;
+    color: #164e83;
+    font-weight: bold;
+}
+
+nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    height: 72px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -3px 12px #0001;
+}
+
+nav button {
+    border: none;
+    background: none;
+    color: #64748b;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+nav button span {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+nav button.activo {
+    color: #1766a5;
+    font-weight: bold;
+}
+
+.progreso {
+    background: white;
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 15px;
+}
+
+.barra {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.barra div {
+    height: 100%;
+    width: 0%;
+    background: #2196d2;
+    transition: 0.3s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <h1>💻 PC APRENDE</h1>
+    <p>Aprende informática de manera fácil y divertida</p>
+</header>
+
+<div class="contenido">
+
+<!-- INICIO -->
+<section id="inicio" class="seccion activa">
+
+<div class="bienvenida">
+    <h2>¡Bienvenido!</h2>
+    <p>
+    Aprende a reconocer las partes de una computadora,
+    descubre sus funciones y demuestra tus conocimientos.
+    </p>
+</div>
+
+<h2 class="titulo">¿Qué deseas aprender?</h2>
+
+<div class="tarjetas">
+
+<div class="tarjeta" onclick="mostrar('partes')">
+    <div class="icono">🖥️</div>
+    <h3>Partes de PC</h3>
+    <p>Conoce sus componentes</p>
+</div>
+
+<div class="tarjeta" onclick="mostrar('aprende')">
+    <div class="icono">📚</div>
+    <h3>Aprender</h3>
+    <p>Estudia sus funciones</p>
+</div>
+
+<div class="tarjeta" onclick="mostrar('quiz')">
+    <div class="icono">📝</div>
+    <h3>Examen</h3>
+    <p>Comprueba lo aprendido</p>
+</div>
+
+<div class="tarjeta" onclick="mostrar('acerca')">
+    <div class="icono">👨‍💻</div>
+    <h3>Acerca de</h3>
+    <p>Sobre la aplicación</p>
+</div>
+
+</div>
+
+<div class="progreso">
+    <h3>📊 Tu progreso</h3>
+    <p id="avanceTexto">Preguntas correctas: 0</p>
+    <div class="barra">
+        <div id="avance"></div>
+    </div>
+</div>
+
+</section>
+
+<!-- PARTES -->
+<section id="partes" class="seccion">
+
+<h2 class="titulo">Partes de la computadora</h2>
+
+<div class="tarjetas" id="listaPartes"></div>
+
+<button class="boton" onclick="mostrar('inicio')">
+Volver al inicio
+</button>
+
+</section>
+
+<!-- APRENDER -->
+<section id="aprende" class="seccion">
+
+<h2 class="titulo">Aprende informática 📖</h2>
+
+<div class="detalle">
+    <div class="icono">💻</div>
+    <h2>¿Qué es una computadora?</h2>
+    <p>
+    Es una máquina electrónica que recibe, procesa y
+    almacena información. Nos permite realizar tareas,
+    estudiar, comunicarnos y trabajar.
+    </p>
+</div>
+
+<br>
+
+<div class="detalle">
+    <h2>Componentes principales</h2>
+    <p>
+    <b>Hardware:</b> son las partes físicas que podemos tocar.
+    <br><br>
+    <b>Software:</b> son los programas y sistemas que
+    permiten funcionar a la computadora.
+    <br><br>
+    <b>Periféricos:</b> son dispositivos que se conectan
+    para introducir o recibir información.
+    </p>
+</div>
+
+<button class="boton" onclick="mostrar('partes')">
+Explorar componentes
+</button>
+
+</section>
+
+<!-- EXAMEN -->
+<section id="quiz" class="seccion">
+
+<h2 class="titulo">📝 Examen de informática</h2>
+
+<p id="numeroPregunta">Pregunta 1 de 5</p>
+
+<div class="detalle" style="margin-top:15px">
+    <h3 id="pregunta"></h3>
+    <div id="opciones"></div>
+    <div id="resultado"></div>
+</div>
+
+<button class="boton" id="siguiente" onclick="siguientePregunta()">
+Siguiente pregunta
+</button>
+
+</section>
+
+<!-- DETALLE -->
+<section id="detalle" class="seccion">
+
+<div class="detalle">
+    <div class="icono" id="detalleIcono"></div>
+    <h2 id="detalleNombre"></h2>
+    <p id="detalleDescripcion"></p>
+</div>
+
+<button class="boton" onclick="mostrar('partes')">
+Volver a los componentes
+</button>
+
+</section>
+
+<!-- ACERCA DE -->
+<section id="acerca" class="seccion">
+
+<div class="detalle">
+    <div class="icono">💻</div>
+    <h2>PC APRENDE</h2>
+    <p>
+    Aplicación educativa diseñada para enseñar las
+    partes de una computadora, sus características
+    y sus funciones principales.
+    <br><br>
+    Una herramienta para aprender informática
+    de manera sencilla e interactiva.
+    <br><br>
+    <b>Versión 1.0</b>
+    </p>
+</div>
+
+</section>
+
+</div>
+
+<!-- MENU INFERIOR -->
+<nav>
+    <button class="activo" onclick="mostrar('inicio',this)">
+        <span>🏠</span>Inicio
+    </button>
+    <button onclick="mostrar('partes',this)">
+        <span>🖥️</span>Partes
+    </button>
+    <button onclick="mostrar('aprende',this)">
+        <span>📚</span>Aprender
+    </button>
+    <button onclick="mostrar('quiz',this)">
+        <span>📝</span>Examen
+    </button>
+</nav>
+
+</div>
+
+<script>
+
+// COMPONENTES DE LA COMPUTADORA
+
+const componentes = [
+{
+nombre:"Monitor",
+icono:"🖥️",
+descripcion:"Es un dispositivo de salida que permite visualizar imágenes, textos, videos y toda la información que procesa la computadora."
+},
+{
+nombre:"Teclado",
+icono:"⌨️",
+descripcion:"Es un dispositivo de entrada que permite escribir letras, números y órdenes en la computadora."
+},
+{
+nombre:"Ratón (Mouse)",
+icono:"🖱️",
+descripcion:"Es un dispositivo de entrada que permite mover el cursor, seleccionar elementos y ejecutar acciones."
+},
+{
+nombre:"CPU",
+icono:"🧠",
+descripcion:"La Unidad Central de Procesamiento es el componente que ejecuta instrucciones y realiza operaciones. Es el cerebro de la computadora."
+},
+{
+nombre:"Memoria RAM",
+icono:"💾",
+descripcion:"Almacena temporalmente los datos y programas que se están utilizando. Su contenido se pierde al apagar el equipo."
+},
+{
+nombre:"Disco duro",
+icono:"💽",
+descripcion:"Permite guardar archivos, documentos, fotografías, videos y programas. También existen unidades SSD."
+},
+{
+nombre:"Placa madre",
+icono:"🔌",
+descripcion:"Es la tarjeta principal que conecta los diferentes componentes internos de la computadora."
+},
+{
+nombre:"Fuente de poder",
+icono:"⚡",
+descripcion:"Convierte y distribuye la energía eléctrica necesaria para alimentar los componentes de la computadora."
+},
+{
+nombre:"Tarjeta gráfica",
+icono:"🎮",
+descripcion:"Se encarga de procesar y generar imágenes para mostrarlas en el monitor."
+},
+{
+nombre:"Ventilador",
+icono:"🌀",
+descripcion:"Ayuda a mantener una temperatura adecuada dentro de la computadora mediante la circulación del aire."
+}
+];
+
+// MOSTRAR COMPONENTES
+
+const lista = document.getElementById("listaPartes");
+
+componentes.forEach((parte, indice) => {
+
+    lista.innerHTML += `
+    <div class="tarjeta" onclick="verDetalle(${indice})">
+        <div class="icono">${parte.icono}</div>
+        <h3>${parte.nombre}</h3>
+        <p>Ver información</p>
+    </div>
+    `;
+
+});
+
+// NAVEGACION
+
+function mostrar(id, boton) {
+
+    document.querySelectorAll(".seccion").forEach(s => {
+        s.classList.remove("activa");
+    });
+
+    document.getElementById(id).classList.add("activa");
+
+    document.querySelectorAll("nav button").forEach(b => {
+        b.classList.remove("activo");
+    });
+
+    if(boton) {
+        boton.classList.add("activo");
+    } else {
+        const botones = document.querySelectorAll("nav button");
+        const indice = ["inicio","partes","aprende","quiz"].indexOf(id);
+        if(indice >= 0) botones[indice].classList.add("activo");
+    }
+}
+
+// DETALLES DE CADA PARTE
+
+function verDetalle(indice) {
+
+    const parte = componentes[indice];
+
+    document.getElementById("detalleIcono").textContent =
+        parte.icono;
+
+    document.getElementById("detalleNombre").textContent =
+        parte.nombre;
+
+    document.getElementById("detalleDescripcion").textContent =
+        parte.descripcion;
+
+    mostrar("detalle");
+}
+
+// PREGUNTAS DEL EXAMEN
+
+const preguntas = [
+{
+pregunta:"¿Qué dispositivo permite visualizar imágenes?",
+opciones:["Teclado","Monitor","Mouse"],
+correcta:"Monitor"
+},
+{
+pregunta:"¿Qué componente es considerado el cerebro de la computadora?",
+opciones:["CPU","Monitor","Ratón"],
+correcta:"CPU"
+},
+{
+pregunta:"¿Qué dispositivo permite escribir textos?",
+opciones:["Monitor","Fuente de poder","Teclado"],
+correcta:"Teclado"
+},
+{
+pregunta:"¿Qué componente almacena datos temporalmente?",
+opciones:["Memoria RAM","Mouse","Ventilador"],
+correcta:"Memoria RAM"
+},
+{
+pregunta:"¿Qué componente conecta las partes internas?",
+opciones:["Monitor","Placa madre","Teclado"],
+correcta:"Placa madre"
+}
+];
+
+let preguntaActual = 0;
+let puntos = 0;
+let respondida = false;
+
+function cargarPregunta() {
+
+    const p = preguntas[preguntaActual];
+
+    document.getElementById("numeroPregunta").textContent =
+        `Pregunta ${preguntaActual + 1} de ${preguntas.length}`;
+
+    document.getElementById("pregunta").textContent =
+        p.pregunta;
+
+    document.getElementById("resultado").textContent = "";
+
+    document.getElementById("siguiente").textContent =
+        preguntaActual === preguntas.length - 1 ?
+        "Ver resultado" : "Siguiente pregunta";
+
+    document.getElementById("opciones").innerHTML = "";
+
+    respondida = false;
+
+    p.opciones.forEach(opcion => {
+
+        const boton = document.createElement("button");
+
+        boton.className = "opcion";
+        boton.textContent = opcion;
+
+        boton.onclick = () => comprobar(opcion, boton);
+
+        document.getElementById("opciones").appendChild(boton);
+
+    });
+}
+
+function comprobar(opcion, boton) {
+
+    if(respondida) return;
+
+    respondida = true;
+
+    if(opcion === preguntas[preguntaActual].correcta) {
+
+        puntos++;
+
+        document.getElementById("resultado").innerHTML =
+            "✅ ¡Correcto! Muy bien.";
+
+        boton.style.background = "#dcfce7";
+
+    } else {
+
+        document.getElementById("resultado").innerHTML =
+            "❌ Incorrecto. La respuesta correcta es: " +
+            preguntas[preguntaActual].correcta;
+
+        boton.style.background = "#fee2e2";
+
+    }
+
+    document.getElementById("avanceTexto").textContent =
+        "Preguntas correctas: " + puntos;
+
+    document.getElementById("avance").style.width =
+        (puntos / preguntas.length * 100) + "%";
+}
+
+function siguientePregunta() {
+
+    if(!respondida) {
+        alert("Primero selecciona una respuesta.");
+        return;
+    }
+
+    preguntaActual++;
+
+    if(preguntaActual < preguntas.length) {
+
+        cargarPregunta();
+
+    } else {
+
+        document.getElementById("pregunta").textContent =
+            "¡Examen terminado!";
+
+        document.getElementById("opciones").innerHTML = "";
+
+        document.getElementById("resultado").innerHTML =
+            `🏆 Obtuviste ${puntos} de ${preguntas.length} respuestas correctas.`;
+
+        document.getElementById("numeroPregunta").textContent =
+            "Resultado final";
+
+        document.getElementById("siguiente").textContent =
+            "Volver a intentar";
+
+        document.getElementById("siguiente").onclick = reiniciar;
+
+    }
+}
+
+function reiniciar() {
+
+    preguntaActual = 0;
+    puntos = 0;
+
+    document.getElementById("avance").style.width = "0%";
+
+    document.getElementById("avanceTexto").textContent =
+        "Preguntas correctas: 0";
+
+    document.getElementById("siguiente").onclick =
+        siguientePregunta;
+
+    cargarPregunta();
+}
+
+cargarPregunta();
+
+</script>
+
+</body>
+</html>
